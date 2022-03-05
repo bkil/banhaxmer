@@ -132,11 +132,12 @@ If certain items can not be constrained by power levels within matrix itself, th
 * 40 manually promoted user not a candidate for moderator
 * 41 manually promoted user who declined a moderator position
 * 42..49 manually promoted user candidate for moderator
-* 50 bot requiring only message redaction
-* 51 bot requiring kick
-* 52 bot requiring ban
-* 53..60 human moderators: promoted incrementally and manually
-* 53 most recent human moderator: also invited to the private moderator room
+* 50 decentralized bot requiring only message redaction
+* 51 decentralized bot requiring kick
+* 52 decentralized bot requiring ban
+* 53 centralized bot
+* 54..60 human moderators: promoted incrementally and manually
+* 54 most recent human moderator: also invited to the private moderator room
 * 57 human moderator who may command a bot to change the power level of those within the designated range
 * 60 most senior human moderator
 * 70 bot requiring changing power levels of others
