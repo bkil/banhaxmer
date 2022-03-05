@@ -66,23 +66,23 @@ Triggered by:
 * Only a single outstanding event per user per kind must be allowed within the moderation queue - triggering further such messages should demote the user
 * If a moderator sees the content as inappropriate in the moderation room, the user could be demoted, the content moved to the moderation trail archive room and the grant request revoked
 * If a moderator approves the content in the moderation room or if a senior member approves the grant in the main room, the bot forwards the content to the main room and removes it from the moderation room
-* If a non-moderator approved the grant and the item proves to be indecent, they can removing the reactji revokes the grant, moves the content to a moderation trail archive and demotes the newbie until moderator review
+* If a non-moderator approved the grant and the item proves to be indecent, they can remove the reactji to revoke the grant (or react with the opposite reactji): then the bot moves the content to a moderation trail archive and demotes the newbie until moderator review
 
 ### Option to retain first incident
 
 * Optional, probably during the `happy place` threat level
 * If a user does something above its power level, instead of waiting for approval, it would appear instantly
-* It would immediately unvoice the user
+* The bot would immediately unvoice the user
 * The last posted content would remain visible in the main room
-* If senior members voted to remove it, it would be moved to the moderation trail archive room and the user would be marked as waiting to be banned
-* If senior members or moderators voted to keep it, the power level of the user would be restored and the mxid of the voters and the content URI stored in the moderation trail
+* If senior members voted to remove it, it would be moved to the moderation trail archive room and the bot would mark the user as waiting to be banned
+* If senior members or moderators voted to keep it, the power level of the user would be restored and the mxid of the voters and the content URI stored in the moderation trail (if it wasn't a moderator)
 * If a senior member voted to keep it but a moderator later determines that the content was indecent, it would both remove the content and demote both the newbie user and possibly the voting senior member(s)
 
 ## Privileges per power level
 
 If certain items can not be constrained by power levels within matrix itself, the bot just redacts every such event individually and demotes after repeated attempts.
 
-* unvoiced: default, show 1 CAPTCHA, or 2 if from a home server lacking email address and CAPTCHA
+* unvoiced: default, show 1 CAPTCHA, or 2 if risky (e.g., if from a home server lacking email address and CAPTCHA)
 * unvoiced with numeric emoji allowed: to allow for client-side moderation implementations
 * rate limit messages, especially if no senior is talking between the messages of a user
 * message may include textual Unicode (only US-ASCII in English rooms)
@@ -120,7 +120,7 @@ If certain items can not be constrained by power levels within matrix itself, th
 ### Matrix power levels
 
 * -2..39 power level range managed automatically without moderator action
-* -3..48 power level range a moderator can set through a bot
+* -3..49 power level range a moderator can set through a bot
 * -3 silenced by moderator
 * -2 silenced due to senior voting, pending moderator review
 * -1 silenced automatically due to an event, pending moderator review
@@ -130,18 +130,19 @@ If certain items can not be constrained by power levels within matrix itself, th
 * 3 can send a (safe) message to a room even in under attack level
 * ...
 * 40 manually promoted user not a candidate for moderator
-* 41 manually promoted user who declined to take up moderator offer
-* 42..48 manually promoted user candidate for moderator
-* 49 bot requiring only message redaction
-* 50 bot requiring kick & ban as well
-* 51..60 human moderators: promoted incrementally and manually
-* 50 most recent human moderator: also invited to the private moderator room
-* 55 human moderator who may command a bot to change the power level of those within the designated range
+* 41 manually promoted user who declined a moderator position
+* 42..49 manually promoted user candidate for moderator
+* 50 bot requiring only message redaction
+* 51 bot requiring kick
+* 52 bot requiring ban
+* 53..60 human moderators: promoted incrementally and manually
+* 53 most recent human moderator: also invited to the private moderator room
+* 57 human moderator who may command a bot to change the power level of those within the designated range
 * 60 most senior human moderator
 * 70 bot requiring changing power levels of others
 * >=71 other general moderator/admin levels of power
-* 90 bot requiring Server ACL
-* 91 human requiring Server ACL
+* 90 human moderator who can change Server ACL through a bot
+* 91 bot requiring Server ACL
 
 ## Power level changes
 
@@ -158,7 +159,7 @@ A new member may start at an intermediary power level around where a profile pic
 * ask in a poll before first forwarding so that a potent human will be around
 * on the first few levels, based on the number of senior interactions
 * limit the number of users that can be newly voiced within a time interval
-* wait at least a few minutes before each member proposal so that a few senior read receipts or message events can arrive
+* wait at least a few minutes on lower levels (an hour on higher levels) before each member proposal so that a few senior read receipts or message events can arrive
 
 ### Automatic demotion
 
@@ -195,6 +196,19 @@ We may first consider a crude approximation by aggregating reactions given by se
 * number of device sessions
 * have set a profile image
 * have set a display name
+
+### User reputation from threads
+
+We could periodically analyze the chat for threads:
+
+* https://gitlab.com/bkil/freedom-fighters/-/blob/master/en/server/linear-chat-forum-threading.md
+
+Within each thread:
+
+* determine who the user replied to (and then later received the reply) and who replied to the user
+* the more seniors a user interacts with, the faster its reputation increases
+* only count non-redacted and non-negative interactions
+* it is stronger if somebody reacts to the user then the other way around, unless it is part of a chain
 
 ### User event risk
 
