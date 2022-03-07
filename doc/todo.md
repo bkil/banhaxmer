@@ -2,6 +2,32 @@
 
 TODO: possible protection measures.
 
+## Attack types
+
+Moderators need elevated privileges for dealing with the following distinct use cases.
+
+### Troublemakers
+
+* deliberately "trolling" on purpose
+* to annoy others
+* posting text or attachments that the user is sure will outrage members and mods
+* flooding
+
+### Rule violations
+
+* violations against laws, the code of conduct or terms of service of the community
+
+### Atmosphere toxicity
+
+These should ideally be spelled out in the ToS/CoC, but most are borderline:
+
+* "you know it when you see it"
+* genuine users disagreeing or arguing too much
+* one leaching too much
+* one hogging all conversations, forcing their viewpoint on others all the time
+* one who is not being friendly in response to friendly comments
+* one who gets personal too often in response to objective comments
+
 ## Threat level
 
 Depending on the minute by minute state of the network, subsets of security measures may be disabled.

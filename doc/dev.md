@@ -52,6 +52,8 @@
 * hourly scheduled cron execution
 * manual invocation through a webpage URL
 * optional continuous long polling push by daemon via Server-Sent Events EventSource API
+* forwarding Matrix notification email to pipe it as input
+* webhooks
 
 ### Caching
 
@@ -83,13 +85,14 @@ The backend could be installed and operated redundantly and simultaneously at ea
 
 https://gitlab.com/bkil/freedom-fighters/-/blob/master/en/server/backend-optional-web-apps.md
 
+## Components
+
 ### Automatic update
 
 * Crucial so that every instance must operate in the same way
 * If a centralized bot is also in operation, it should have a higher power level and kick out desynced decentralized bots
 * If a decentralized bot is kicked out by a centralized bot, it should update itself, purge its caches, and wait based on exponential backoff before joining again
-
-## Components
+* A decentralized bot may send a notice to the centralized bot (and others listening) if some other decentralized bot seems to be out of sync from their perspective
 
 ### CAPTCHA webpage frontend
 
