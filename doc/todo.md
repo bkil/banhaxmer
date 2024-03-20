@@ -217,12 +217,14 @@ We may first consider a crude approximation by aggregating reactions given by se
 * number of days when read receipt was updated
 * number of days when sent a new message
 * number of days when sent a reacji on a recent message at most 1 day old or within the last 20 visible messages in a room
-* total number of received replies and mentions by seniors
+* total number of replies and mentions received from seniors
 * total number of sent messages
 * total number of commons rooms present
-* number of device sessions
+* special roles (kick, ban, redaction) given in foreign rooms in common where a reputable user is an admin
+* number of device sessions and their change or renaming over time
 * have set a profile image
 * have set a display name
+* bot detection based on read receipt and online status updates: no downtime, periodicity
 
 ### User reputation from threads
 
@@ -235,7 +237,7 @@ Within each thread:
 * determine who the user replied to (and then later received the reply) and who replied to the user
 * the more seniors a user interacts with, the faster its reputation increases
 * only count non-redacted and non-negative interactions
-* it is stronger if somebody reacts to the user then the other way around, unless it is part of a chain
+* it is stronger if somebody reacts to the user than the other way around, unless it is part of a chain
 
 ### User event risk
 
@@ -259,6 +261,16 @@ Within each thread:
 * IP ASN in a data center
 * mature age of last IP change
 * server ACL not in ban list rooms (only as a signal)
+
+### Soft blocking of home server
+
+* against advanced username or display name spamming
+* if in under attack mode
+* if an abnormally high amount of joins received overall or from this home server
+* apply a much more strict username spam filtering
+* kick all new joiners coming from here and redact join events
+* save to moderation log
+* consider reinviting some of them after the troll waves are over
 
 ## CAPTCHA
 
