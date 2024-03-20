@@ -53,7 +53,7 @@
 * manual invocation through a webpage URL
 * optional continuous long polling push by daemon via Server-Sent Events EventSource API
 * forwarding Matrix notification email to pipe it as input
-* webhooks
+* webhooks: Matrix notification pusher, ActivityPub S2S API, XMPP S2S API, GitHub, GitLab, gitea, BitBucket, SourceForge, LaunchPad, Pagure, gogs
 
 ### Caching
 
@@ -64,6 +64,7 @@
 * Ideally in a flat file database for easier setup and less imposed limits
 * Seamlessly recreate on first start
 * May want to submit requests in batches
+* Handle out of order messages
 
 ## Deployment
 
@@ -79,6 +80,7 @@ The backend could be installed and operated redundantly and simultaneously at ea
 
 * command line or via a background service
 * OpenWrt router
+* either via its own REST API or through Matrix client-server API
 * a dedicated webpage and background worker that should be kept open
 * a browser WebExtension, UserScript or bookmarklet
 * Matrix Element widget
@@ -93,6 +95,12 @@ https://gitlab.com/bkil/freedom-fighters/-/blob/master/en/server/backend-optiona
 * If a centralized bot is also in operation, it should have a higher power level and kick out desynced decentralized bots
 * If a decentralized bot is kicked out by a centralized bot, it should update itself, purge its caches, and wait based on exponential backoff before joining again
 * A decentralized bot may send a notice to the centralized bot (and others listening) if some other decentralized bot seems to be out of sync from their perspective
+
+### Message ingestion
+
+* via the Matrix client-server API
+* optional custom API for commands, voting and to invoke the poll webhook
+* optional custom API to ingest new messages
 
 ### CAPTCHA webpage frontend
 
